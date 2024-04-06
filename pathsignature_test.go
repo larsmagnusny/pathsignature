@@ -9,7 +9,7 @@ func TestSignature_Normal(t *testing.T) {
 
 	signature := CreatePathSignature(str)
 
-	signatureString := signature.toString()
+	signatureString := signature.ToString()
 	expected := "th-is-a -pa-so-**-**-**"
 	if signatureString != expected {
 		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)
@@ -21,7 +21,7 @@ func TestSignature_Wildcard_Middle(t *testing.T) {
 
 	signature := CreatePathSignature(str)
 
-	signatureString := signature.toString()
+	signatureString := signature.ToString()
 	expected := "th-**-**-**-**-**-**-**"
 	if signatureString != expected {
 		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)

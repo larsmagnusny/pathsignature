@@ -2,13 +2,13 @@ package pathsignature
 
 import "strings"
 
-type path_signature struct {
+type PathSignature struct {
 	//
 	// **-**-**-**-**-**-**-**
 	runes [16]rune
 }
 
-func (sig path_signature) toString() string {
+func (sig PathSignature) ToString() string {
 	var sb strings.Builder
 
 	for i := 0; i < 16; i += 2 {
@@ -23,7 +23,7 @@ func (sig path_signature) toString() string {
 	return sb.String()
 }
 
-func isSeperator(r rune) bool {
+func IsSeperator(r rune) bool {
 	if r == rune('/') {
 		return true
 	}
@@ -39,7 +39,7 @@ func isSeperator(r rune) bool {
 	return false
 }
 
-func isWildcard(r rune) bool {
+func IsWildcard(r rune) bool {
 	if r == '*' {
 		return true
 	}
@@ -47,8 +47,8 @@ func isWildcard(r rune) bool {
 	return false
 }
 
-func createPathSignature(str string) path_signature {
-	signature := path_signature{}
+func CreatePathSignature(str string) PathSignature {
+	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
 		signature.runes[i] = '*'
@@ -58,11 +58,11 @@ func createPathSignature(str string) path_signature {
 	lastWasSeperator := false
 	for i := 0; i < len(str)-2 && offset < 16; i++ {
 		r := rune(str[i])
-		if isWildcard(r) {
+		if IsWildcard(r) {
 			return signature
 		}
 
-		if isSeperator(r) {
+		if IsSeperator(r) {
 			if lastWasSeperator {
 				continue
 			}
@@ -71,20 +71,20 @@ func createPathSignature(str string) path_signature {
 			a := rune(str[i+1])
 			b := rune(str[i+2])
 
-			if isWildcard(a) {
+			if IsWildcard(a) {
 				signature.runes[0+offset] = rune('*')
 				signature.runes[1+offset] = rune('*')
 				return signature
 			}
 
-			if !isSeperator(a) {
+			if !IsSeperator(a) {
 				signature.runes[0+offset] = rune(a)
 			}
 
-			if isWildcard(b) {
+			if IsWildcard(b) {
 				signature.runes[1+offset] = rune('*')
 			}
-			if !isSeperator(b) {
+			if !IsSeperator(b) {
 				signature.runes[1+offset] = rune(b)
 			} else {
 				signature.runes[1+offset] = rune(' ')
@@ -103,8 +103,8 @@ func createPathSignature(str string) path_signature {
 	return signature
 }
 
-func createReversePathSignature(str string) path_signature {
-	signature := path_signature{}
+func CreateReversePathSignature(str string) PathSignature {
+	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
 		signature.runes[i] = '*'
@@ -114,11 +114,11 @@ func createReversePathSignature(str string) path_signature {
 	lastWasSeperator := false
 	for i := len(str) - 1; i >= 2 && offset < 16; i-- {
 		r := rune(str[i])
-		if isWildcard(r) {
+		if IsWildcard(r) {
 			return signature
 		}
 
-		if isSeperator(r) {
+		if IsSeperator(r) {
 			if lastWasSeperator {
 				continue
 			}
@@ -127,20 +127,20 @@ func createReversePathSignature(str string) path_signature {
 			a := rune(str[i+1])
 			b := rune(str[i+2])
 
-			if isWildcard(a) {
+			if IsWildcard(a) {
 				signature.runes[0+offset] = rune('*')
 				signature.runes[1+offset] = rune('*')
 				return signature
 			}
 
-			if !isSeperator(a) {
+			if !IsSeperator(a) {
 				signature.runes[0+offset] = rune(a)
 			}
 
-			if isWildcard(b) {
+			if IsWildcard(b) {
 				signature.runes[1+offset] = rune('*')
 			}
-			if !isSeperator(b) {
+			if !IsSeperator(b) {
 				signature.runes[1+offset] = rune(b)
 			} else {
 				signature.runes[1+offset] = rune(' ')

@@ -5,15 +5,15 @@ import "strings"
 type PathSignature struct {
 	//
 	// **-**-**-**-**-**-**-**
-	runes [16]rune
+	Runes [16]rune
 }
 
 func (sig PathSignature) ToString() string {
 	var sb strings.Builder
 
 	for i := 0; i < 16; i += 2 {
-		sb.WriteRune(sig.runes[i])
-		sb.WriteRune(sig.runes[i+1])
+		sb.WriteRune(sig.Runes[i])
+		sb.WriteRune(sig.Runes[i+1])
 
 		if i < 14 {
 			sb.WriteRune('-')
@@ -51,7 +51,7 @@ func CreatePathSignature(str string) PathSignature {
 	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
-		signature.runes[i] = '*'
+		signature.Runes[i] = '*'
 	}
 
 	offset := 0
@@ -72,22 +72,22 @@ func CreatePathSignature(str string) PathSignature {
 			b := rune(str[i+2])
 
 			if IsWildcard(a) {
-				signature.runes[0+offset] = rune('*')
-				signature.runes[1+offset] = rune('*')
+				signature.Runes[0+offset] = rune('*')
+				signature.Runes[1+offset] = rune('*')
 				return signature
 			}
 
 			if !IsSeperator(a) {
-				signature.runes[0+offset] = rune(a)
+				signature.Runes[0+offset] = rune(a)
 			}
 
 			if IsWildcard(b) {
-				signature.runes[1+offset] = rune('*')
+				signature.Runes[1+offset] = rune('*')
 			}
 			if !IsSeperator(b) {
-				signature.runes[1+offset] = rune(b)
+				signature.Runes[1+offset] = rune(b)
 			} else {
-				signature.runes[1+offset] = rune(' ')
+				signature.Runes[1+offset] = rune(' ')
 				offset += 2
 				continue
 			}
@@ -107,7 +107,7 @@ func CreateReversePathSignature(str string) PathSignature {
 	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
-		signature.runes[i] = '*'
+		signature.Runes[i] = '*'
 	}
 
 	offset := 0
@@ -128,22 +128,22 @@ func CreateReversePathSignature(str string) PathSignature {
 			b := rune(str[i+2])
 
 			if IsWildcard(a) {
-				signature.runes[0+offset] = rune('*')
-				signature.runes[1+offset] = rune('*')
+				signature.Runes[0+offset] = rune('*')
+				signature.Runes[1+offset] = rune('*')
 				return signature
 			}
 
 			if !IsSeperator(a) {
-				signature.runes[0+offset] = rune(a)
+				signature.Runes[0+offset] = rune(a)
 			}
 
 			if IsWildcard(b) {
-				signature.runes[1+offset] = rune('*')
+				signature.Runes[1+offset] = rune('*')
 			}
 			if !IsSeperator(b) {
-				signature.runes[1+offset] = rune(b)
+				signature.Runes[1+offset] = rune(b)
 			} else {
-				signature.runes[1+offset] = rune(' ')
+				signature.Runes[1+offset] = rune(' ')
 				offset += 2
 				continue
 			}

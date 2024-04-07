@@ -109,20 +109,40 @@ func CreateReverse(str string) PathSignature {
 
 	offset := 0
 	lastWasSeperator := false
-	for i := len(str) - 1; i >= 2 && offset < 16; i-- {
+	for i := len(str) - 1; i >= 0 && offset < 16; i-- {
 		r := rune(str[i])
-		if IsWildcard(r) {
+
+		runeIsWildcard := IsWildcard(r)
+		runeIsSeperator := IsSeperator(r)
+		if runeIsWildcard {
 			return signature
 		}
 
-		if IsSeperator(r) {
+		if runeIsSeperator || i == 0 {
 			if lastWasSeperator {
 				continue
 			}
 			lastWasSeperator = true
+			var a rune = ' '
+			var b rune = ' '
 
-			a := rune(str[i+1])
-			b := rune(str[i+2])
+			if i == 0 && !runeIsSeperator {
+				if i < len(str) {
+					a = rune(str[i])
+				}
+
+				if i+1 < len(str) {
+					b = rune(str[i+1])
+				}
+			} else {
+				if i+1 < len(str) {
+					a = rune(str[i+1])
+				}
+
+				if i+2 < len(str) {
+					b = rune(str[i+2])
+				}
+			}
 
 			if IsWildcard(a) {
 				signature.Runes[0+offset] = rune('*')

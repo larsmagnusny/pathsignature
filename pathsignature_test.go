@@ -1,6 +1,7 @@
 package pathsignature
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -16,13 +17,26 @@ func TestSignature_Normal(t *testing.T) {
 	}
 }
 
+// C:\Program Files\Go\pkg\include\asm_amd64.h
+func TestSignature_EdgeCase_0(t *testing.T) {
+	str := strings.ToLower("C:\\Program Files\\Go\\pkg\\include\\asm_amd64.h")
+
+	signature := CreateReverse(str)
+
+	signatureString := signature.ToString()
+	expected := "h -as-in-pk-go-fi-pr-c:"
+	if signatureString != expected {
+		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)
+	}
+}
+
 func TestSignature_Reverse_Normal(t *testing.T) {
 	str := "/this/is/a/path/something.exe"
 
 	signature := CreateReverse(str)
 
 	signatureString := signature.ToString()
-	expected := "ex-so-pa-a -is-**-**-**"
+	expected := "ex-so-pa-a -is-th-**-**"
 	if signatureString != expected {
 		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)
 	}
@@ -70,7 +84,7 @@ func TestSignature_Reverse_Wildcard_Start(t *testing.T) {
 	signature := CreateReverse(str)
 
 	signatureString := signature.ToString()
-	expected := "ex-so-pa-a -is-**-**-**"
+	expected := "ex-so-pa-a -is-th-**-**"
 	if signatureString != expected {
 		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)
 	}

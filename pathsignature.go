@@ -2,9 +2,11 @@ package pathsignature
 
 import "strings"
 
+// Fragments of the path based on the seperators contained within
+// Example:
+// path: 	  C:\example\path\to\something.exe
+// signature: c:-ex-pa-to-so-ex-**-**
 type PathSignature struct {
-	//
-	// **-**-**-**-**-**-**-**
 	Runes [16]rune
 }
 
@@ -24,15 +26,14 @@ func (sig PathSignature) ToString() string {
 }
 
 func IsSeperator(r rune) bool {
-	if r == rune('/') {
+	switch r {
+	case '/':
 		return true
-	}
-
-	if r == rune('\\') {
+	case '\\':
 		return true
-	}
-
-	if r == rune(' ') {
+	case ' ':
+		return true
+	case '.':
 		return true
 	}
 
@@ -40,11 +41,7 @@ func IsSeperator(r rune) bool {
 }
 
 func IsWildcard(r rune) bool {
-	if r == '*' {
-		return true
-	}
-
-	return false
+	return r == '*'
 }
 
 func CreatePathSignature(str string) PathSignature {

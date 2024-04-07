@@ -10,7 +10,7 @@ func TestSignature_Normal(t *testing.T) {
 	signature := CreatePathSignature(str)
 
 	signatureString := signature.ToString()
-	expected := "th-is-a -pa-so-**-**-**"
+	expected := "th-is-a -pa-so-ex-**-**"
 	if signatureString != expected {
 		t.Errorf("Signature %s not equal to expected %s", signatureString, expected)
 	}

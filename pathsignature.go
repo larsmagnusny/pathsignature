@@ -44,7 +44,7 @@ func IsWildcard(r rune) bool {
 	return r == '*'
 }
 
-func CreatePathSignature(str string) PathSignature {
+func Create(str string) PathSignature {
 	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
@@ -100,7 +100,7 @@ func CreatePathSignature(str string) PathSignature {
 	return signature
 }
 
-func CreateReversePathSignature(str string) PathSignature {
+func CreateReverse(str string) PathSignature {
 	signature := PathSignature{}
 
 	for i := 0; i < 16; i++ {
@@ -145,7 +145,6 @@ func CreateReversePathSignature(str string) PathSignature {
 				continue
 			}
 
-			i--
 			offset += 2
 			continue
 		}
